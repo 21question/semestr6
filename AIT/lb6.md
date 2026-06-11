@@ -75,12 +75,15 @@ def health():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT, debug=False)
-
+```
 
 ### 3.2 requirements.txt
+```
 Flask==2.3.3
+```
 
 ### 3.3 Dockerfile
+```
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -94,16 +97,17 @@ RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
 CMD ["python", "app.py"]
-
+```
 ## 4. Сборка Docker-образа
-
+```
 $ cd ~/flask-ping-pong
 $ docker build -t flask-ping-pong .
-
+```
 ## 5.Тестирование работы
+```
 $ curl http://localhost:8083/ping
 $ curl http://localhost:8084/ping
 $ curl http://localhost:8085/ping
-
+```
 ## 6. Заключение
 С помощью Docker были запущены 3 независимых экземпляра приложения на портах 8083, 8084 и 8085, каждый с собственным уникальным ответом. Все экземпляры успешно прошли тестирование через curl и браузер.
