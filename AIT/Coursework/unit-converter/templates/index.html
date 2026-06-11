@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Конвертер единиц измерения</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Конвертер единиц измерения</h1>
+
+    <form method="POST">
+
+        <label>Категория</label>
+
+        <select id="category"
+                name="category"
+                onchange="updateUnits()">
+
+            <option value="length">Длина</option>
+            <option value="mass">Масса</option>
+            <option value="time">Время</option>
+            <option value="volume">Объем</option>
+
+        </select>
+
+        <label>Значение</label>
+
+        <input
+                type="number"
+                step="any"
+                name="value"
+                required>
+
+        <label>Из</label>
+
+        <select id="from_unit"
+                name="from_unit"></select>
+
+        <label>В</label>
+
+        <select id="to_unit"
+                name="to_unit"></select>
+
+        <button type="submit">
+            Перевести
+        </button>
+
+    </form>
+
+    {% if result is not none %}
+        <div class="result">
+            Результат: {{ result }}
+        </div>
+    {% endif %}
+
+</div>
+
+<script>
+
+const units = {
+
+    length: [
+        "meter",
+        "kilometer",
+        "centimeter",
+        "millimeter",
+        "mile"
+    ],
+
+    mass: [
+        "kilogram",
+        "gram",
+        "pound",
+        "ton"
+    ],
+
+    time: [
+        "second",
+        "minute",
+        "hour",
+        "day"
+    ],
+
+    volume: [
+        "liter",
+        "milliliter",
+        "cubic_meter"
+    ]
+};
+
+function updateUnits() {
+
+    const category =
+        document.getElementById("category").value;
+
+    const from =
+        document.getElementById("from_unit");
+
+    const to =
+        document.getElementById("to_unit");
+
+    from.innerHTML = "";
+    to.innerHTML = "";
+
+    units[category].forEach(unit => {
+
+        let option1 =
+            document.createElement("option");
+
+        option1.value = unit;
+
+        option1.text = unit;
+
+        from.appendChild(option1);
+
+        let option2 =
+            document.createElement("option");
+
+        option2.value = unit;
+
+        option2.text = unit;
+
+        to.appendChild(option2);
+    });
+}
+
+updateUnits();
+
+</script>
+
+</body>
+</html>
